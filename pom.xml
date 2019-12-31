@@ -18,6 +18,7 @@
 		<module>etransaction-service</module>
 		<module>epayment-service</module>
 		<module>eventuate-common</module>
+		<module>einventory-service</module>
 	</modules>
 
 	<properties>
