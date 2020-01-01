@@ -6,4 +6,5 @@
     <version>1.0.1</version>
   </parent>
   <artifactId>eventuate-common</artifactId>
+  <version>1.0.0</version>
 </project>

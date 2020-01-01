@@ -8,6 +8,11 @@
   <artifactId>etransaction-service</artifactId>
   
   <dependencies>
+  		<dependency>
+			<groupId>com.eventuate.example</groupId>
+			<artifactId>eventuate-common</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger2</artifactId>
