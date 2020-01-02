@@ -13,7 +13,7 @@
 		<version>2.1.1.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	
+
 	<modules>
 		<module>etransaction-service</module>
 		<module>epayment-service</module>
@@ -55,10 +55,15 @@
 			<artifactId>eventuate-local-java-jdbc</artifactId>
 			<version>${eventuateLocalVersion}</version>
 		</dependency>
-		<dependency>
+		<!-- <dependency>
 			<groupId>io.eventuate.local.java</groupId>
 			<artifactId>eventuate-local-java-embedded-cdc-autoconfigure</artifactId>
 			<version>${eventuateLocalVersion}</version>
+		</dependency> -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.9</version>
 		</dependency>
 		<dependency>
 			<groupId>org.postgresql</groupId>
@@ -111,5 +116,5 @@
 			<url>http://jcenter.bintray.com</url>
 		</repository>
 	</repositories>
-	
+
 </project>

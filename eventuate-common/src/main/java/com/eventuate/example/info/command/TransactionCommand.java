@@ -1,4 +1,4 @@
-package com.eventuate.example.domain;
+package com.eventuate.example.info.command;
 
 import io.eventuate.Command;
 

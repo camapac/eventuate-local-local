@@ -1,7 +1,15 @@
 package com.eventuate.example.entity;
 
-import com.eventuate.example.domain.TransactionCommand;
+import java.util.List;
 
+import org.springframework.beans.BeanUtils;
+
+import com.eventuate.example.info.command.CreateTransactionCommand;
+import com.eventuate.example.info.command.TransactionCommand;
+import com.eventuate.example.info.event.CreateTransactionEvent;
+
+import io.eventuate.Event;
+import io.eventuate.EventUtil;
 import io.eventuate.ReflectiveMutableCommandProcessingAggregate;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,5 +26,12 @@ public class Transaction extends ReflectiveMutableCommandProcessingAggregate<Tra
 	private String customerId;
 	private Double totalPrice;
 	private String noted;
+	
+	
+	public List<Event> process(CreateTransactionCommand cmd) {
+		CreateTransactionEvent event = new CreateTransactionEvent();
+		BeanUtils.copyProperties(cmd, event);
+		return EventUtil.events(event);
+	}
 	
 }

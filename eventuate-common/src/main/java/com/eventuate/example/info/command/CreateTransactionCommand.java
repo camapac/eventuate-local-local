@@ -1,4 +1,4 @@
-package com.eventuate.example.domain;
+package com.eventuate.example.info.command;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
