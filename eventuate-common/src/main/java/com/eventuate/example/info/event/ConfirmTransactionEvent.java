@@ -1,16 +1,16 @@
-package com.eventuate.example.info;
+package com.eventuate.example.info.event;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Setter
 @Getter
-public class TransactionConfirmRequest {
-	
+public class ConfirmTransactionEvent implements TransactionEvent {
+
 	private String id;
 
 }

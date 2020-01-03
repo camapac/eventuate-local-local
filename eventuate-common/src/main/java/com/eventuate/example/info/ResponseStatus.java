@@ -5,12 +5,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
-@Getter
-public class TransactionConfirmRequest {
-	
-	private String id;
-
+public class ResponseStatus {
+	private String code;
+	private String message;
 }

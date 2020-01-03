@@ -11,8 +11,8 @@ import com.eventuate.example.entity.Transaction;
 import com.eventuate.example.etransaction.event.TransactionWorkflow;
 import com.eventuate.example.info.command.TransactionCommand;
 
-import io.eventuate.AggregateRepository;
-import io.eventuate.EventuateAggregateStore;
+import io.eventuate.sync.AggregateRepository;
+import io.eventuate.sync.EventuateAggregateStore;
 import io.eventuate.javaclient.spring.EnableEventHandlers;
 
 @Configuration
@@ -26,13 +26,13 @@ public class ETransactionConfiguration {
 		return new HttpMessageConverters(additional);
 	}
 
-	@Bean
+	@Bean(name="transactionWorkflow")
 	public TransactionWorkflow transactionWorkflow() {
 		return new TransactionWorkflow();
 	}
 
-	@Bean
-	public AggregateRepository<Transaction, TransactionCommand> orderRepository(EventuateAggregateStore eventStore) {
+	@Bean(name="transactionRepository")
+	public AggregateRepository<Transaction, TransactionCommand> transactionRepository(EventuateAggregateStore eventStore) {
 		return new AggregateRepository<>(Transaction.class, eventStore);
 	}
 

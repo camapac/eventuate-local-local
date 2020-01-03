@@ -2,8 +2,12 @@ package com.eventuate.example.etransaction.event;
 
 import java.util.concurrent.CompletableFuture;
 
+import org.springframework.beans.BeanUtils;
+
 import com.eventuate.example.entity.Transaction;
+import com.eventuate.example.info.command.ConfirmTransactionCommand;
 import com.eventuate.example.info.command.CreateTransactionCommand;
+import com.eventuate.example.info.event.ConfirmTransactionEvent;
 import com.eventuate.example.info.event.CreateTransactionEvent;
 import com.eventuate.example.utils.JsonUtils;
 
@@ -14,15 +18,26 @@ import io.eventuate.EventSubscriber;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@EventSubscriber(id = "transacitonWorkflow")
+@EventSubscriber(id = "transactionWorkflow")
 public class TransactionWorkflow {
 
+//	@EventHandlerMethod
+//	public CompletableFuture<EntityWithIdAndVersion<Transaction>> createTransaction(
+//			EventHandlerContext<CreateTransactionEvent> ctx) {
+//		CreateTransactionEvent event = ctx.getEvent();
+//		log.info("Received event={}", JsonUtils.objectToString(event));
+//		CreateTransactionCommand  cmd = new CreateTransactionCommand();
+//		BeanUtils.copyProperties(event, cmd);
+//		return ctx.update(Transaction.class, event.getOrderCode(), cmd);
+//	}
+	
+	
 	@EventHandlerMethod
-	public CompletableFuture<EntityWithIdAndVersion<Transaction>> createTransaction(
-			EventHandlerContext<CreateTransactionEvent> ctx) {
+	public CompletableFuture<EntityWithIdAndVersion<Transaction>> confirmTransaction(
+			EventHandlerContext<ConfirmTransactionEvent> ctx) {
 
-		CreateTransactionEvent event = ctx.getEvent();
+		ConfirmTransactionEvent event = ctx.getEvent();
 		log.info("Received event={}", JsonUtils.objectToString(event));
-		return ctx.update(Transaction.class, event.getOrderCode(), new CreateTransactionCommand());
+		return ctx.update(Transaction.class, event.getId(), new ConfirmTransactionCommand());
 	}
 }
