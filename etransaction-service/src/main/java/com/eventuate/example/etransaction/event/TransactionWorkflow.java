@@ -2,13 +2,9 @@ package com.eventuate.example.etransaction.event;
 
 import java.util.concurrent.CompletableFuture;
 
-import org.springframework.beans.BeanUtils;
-
 import com.eventuate.example.entity.Transaction;
 import com.eventuate.example.info.command.ConfirmTransactionCommand;
-import com.eventuate.example.info.command.CreateTransactionCommand;
 import com.eventuate.example.info.event.ConfirmTransactionEvent;
-import com.eventuate.example.info.event.CreateTransactionEvent;
 import com.eventuate.example.utils.JsonUtils;
 
 import io.eventuate.EntityWithIdAndVersion;
