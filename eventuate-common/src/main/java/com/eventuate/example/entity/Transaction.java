@@ -44,7 +44,7 @@ public class Transaction extends ReflectiveMutableCommandProcessingAggregate<Tra
 	private Date paymentResultDate;
 	private TransactionState preState;
 	private Date createdDate = new Date(System.currentTimeMillis());
-	private TransactionState state = TransactionState.INT; // init order and default
+	private TransactionState state = TransactionState.INIT; // init order and default
 
 	public List<Event> process(CreateTransactionCommand cmd) {
 		CreateTransactionEvent event = new CreateTransactionEvent();
@@ -57,7 +57,7 @@ public class Transaction extends ReflectiveMutableCommandProcessingAggregate<Tra
 		this.customerId = event.getCustomerId();
 		this.totalPrice = event.getTotalPrice();
 		this.noted = event.getNoted();
-		this.state = TransactionState.INT;
+		this.state = TransactionState.INIT;
 	}
 
 	// Confirm the order

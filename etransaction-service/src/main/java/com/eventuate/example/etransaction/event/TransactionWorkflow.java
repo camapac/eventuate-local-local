@@ -33,7 +33,7 @@ public class TransactionWorkflow {
 			EventHandlerContext<ConfirmTransactionEvent> ctx) {
 
 		ConfirmTransactionEvent event = ctx.getEvent();
-		log.info("Received event={}", JsonUtils.objectToString(event));
+		log.info("Received confirm event={}", JsonUtils.objectToString(event));
 		return ctx.update(Transaction.class, event.getId(), new ConfirmTransactionCommand());
 	}
 }

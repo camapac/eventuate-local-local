@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.eventuate.example.constant.MessageConstant;
+import com.eventuate.example.constant.TransactionState;
 import com.eventuate.example.entity.Transaction;
 import com.eventuate.example.etransaction.service.ITransactionService;
 import com.eventuate.example.exception.ApplicationException;
@@ -52,7 +53,7 @@ public class TransactionServiceImpl implements ITransactionService {
 		BeanUtils.copyProperties(request, cmd);
 		Transaction transaction = transactionRepository.find(cmd.getId()).getEntity();
 		log.info("Current transaction ={}",JsonUtils.objectToString(transaction));
-		if (transaction.getState() == null ) {
+		if (transaction.getState() == null || transaction.getState().equals(TransactionState.INIT)) {
 			log.info("Confrim transaction !!!!");
 			EntityWithIdAndVersion<Transaction> future =   transactionRepository.update(request.getId(), cmd);
 			return future;
