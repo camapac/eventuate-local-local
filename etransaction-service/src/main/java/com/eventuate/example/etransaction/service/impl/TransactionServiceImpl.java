@@ -51,15 +51,15 @@ public class TransactionServiceImpl implements ITransactionService {
 	public EntityWithIdAndVersion<Transaction> confirmTransaction(TransactionConfirmRequest request) {
 		ConfirmTransactionCommand cmd = new ConfirmTransactionCommand();
 		BeanUtils.copyProperties(request, cmd);
-		Transaction transaction = transactionRepository.find(cmd.getId()).getEntity();
-		log.info("Current transaction ={}",JsonUtils.objectToString(transaction));
-		if (transaction.getState() == null || transaction.getState().equals(TransactionState.INIT)) {
-			log.info("Confrim transaction !!!!");
+		EntityWithMetadata<Transaction> entityTrans = transactionRepository.find(cmd.getId());
+		log.info("Current transaction ={}",JsonUtils.objectToString(entityTrans.getEntity()));
+		if (entityTrans.getEntity().getState() == null || entityTrans.getEntity().getState().equals(TransactionState.INIT)) {
+			log.info("Begin confrim transaction !!!!");
 			EntityWithIdAndVersion<Transaction> future =   transactionRepository.update(request.getId(), cmd);
 			return future;
 
 		}
-		return null;
+		return entityTrans.toEntityWithIdAndVersion();
 		
 	}
 

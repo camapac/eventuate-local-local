@@ -4,7 +4,9 @@ import java.util.concurrent.CompletableFuture;
 
 import com.eventuate.example.entity.Transaction;
 import com.eventuate.example.info.command.ConfirmTransactionCommand;
+import com.eventuate.example.info.command.SuccessTransactionCommand;
 import com.eventuate.example.info.event.ConfirmTransactionEvent;
+import com.eventuate.example.info.event.TransactionSuccessEvent;
 import com.eventuate.example.utils.JsonUtils;
 
 import io.eventuate.EntityWithIdAndVersion;
@@ -28,12 +30,22 @@ public class TransactionWorkflow {
 //	}
 	
 	
+//	@EventHandlerMethod
+//	public CompletableFuture<EntityWithIdAndVersion<Transaction>> confirmTransaction(
+//			EventHandlerContext<ConfirmTransactionEvent> ctx) {
+//
+//		ConfirmTransactionEvent event = ctx.getEvent();
+//		log.info("Received confirm event={}", JsonUtils.objectToString(event));
+//		return ctx.update(Transaction.class, event.getId(), new ConfirmTransactionCommand(event.getId()));
+//	}
+	
+	
 	@EventHandlerMethod
-	public CompletableFuture<EntityWithIdAndVersion<Transaction>> confirmTransaction(
-			EventHandlerContext<ConfirmTransactionEvent> ctx) {
+	public CompletableFuture<EntityWithIdAndVersion<Transaction>> onPaymentSuccess(
+			EventHandlerContext<TransactionSuccessEvent> ctx) {
 
-		ConfirmTransactionEvent event = ctx.getEvent();
-		log.info("Received confirm event={}", JsonUtils.objectToString(event));
-		return ctx.update(Transaction.class, event.getId(), new ConfirmTransactionCommand(event.getId()));
+		TransactionSuccessEvent event = ctx.getEvent();
+		log.info("Received success transaciton event", JsonUtils.objectToString(event));
+		return ctx.update(Transaction.class, event.getId(), new SuccessTransactionCommand(event.getId()));
 	}
 }

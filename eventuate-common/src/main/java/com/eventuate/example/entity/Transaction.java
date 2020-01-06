@@ -20,6 +20,7 @@ import com.eventuate.example.info.event.TransactionOutstockEvent;
 import com.eventuate.example.info.event.TransactionPaidEvent;
 import com.eventuate.example.info.event.TransactionSuccessEvent;
 import com.eventuate.example.info.event.TransactionUnPaidEvent;
+import com.eventuate.example.utils.JsonUtils;
 
 import io.eventuate.Event;
 import io.eventuate.EventUtil;
@@ -28,7 +29,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
@@ -62,12 +65,12 @@ public class Transaction extends ReflectiveMutableCommandProcessingAggregate<Tra
 
 	// Confirm the order
 	public List<Event> process(ConfirmTransactionCommand cmd) {
-		ConfirmTransactionEvent event = new ConfirmTransactionEvent();
-		BeanUtils.copyProperties(cmd, event);
-		return EventUtil.events(event);
+		log.info("Emit new confirm transaction cmd={}",JsonUtils.objectToString(cmd));
+		return EventUtil.events(new ConfirmTransactionEvent(cmd.getId()));
 	}
 
 	public void apply(ConfirmTransactionEvent event) {
+		log.info("Update transaction state to confirmed");
 		this.preState = this.state;
 		this.state = TransactionState.CONFIRMED;
 	}
