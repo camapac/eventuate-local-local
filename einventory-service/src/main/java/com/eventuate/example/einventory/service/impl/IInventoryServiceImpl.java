@@ -2,9 +2,6 @@ package com.eventuate.example.einventory.service.impl;
 
 import java.util.Random;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.eventuate.example.constant.MessageConstant;
 import com.eventuate.example.einventory.service.IInventoryService;
 import com.eventuate.example.entity.Transaction;
@@ -17,12 +14,10 @@ import io.eventuate.sync.AggregateRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Service
 public class IInventoryServiceImpl implements IInventoryService {
 	
 	private final AggregateRepository<Transaction, TransactionCommand> transactionRepository;
 
-	@Autowired
 	public IInventoryServiceImpl(AggregateRepository<Transaction, TransactionCommand> transactionRepository) {
 		this.transactionRepository = transactionRepository;
 	}

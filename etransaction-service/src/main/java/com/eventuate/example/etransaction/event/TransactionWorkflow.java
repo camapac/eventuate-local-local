@@ -34,6 +34,6 @@ public class TransactionWorkflow {
 
 		ConfirmTransactionEvent event = ctx.getEvent();
 		log.info("Received confirm event={}", JsonUtils.objectToString(event));
-		return ctx.update(Transaction.class, event.getId(), new ConfirmTransactionCommand());
+		return ctx.update(Transaction.class, event.getId(), new ConfirmTransactionCommand(event.getId()));
 	}
 }
