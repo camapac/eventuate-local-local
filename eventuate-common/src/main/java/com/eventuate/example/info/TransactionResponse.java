@@ -1,6 +1,9 @@
 package com.eventuate.example.info;
 
+import java.util.Date;
+
 import com.eventuate.example.constant.TransactionState;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,5 +22,12 @@ public class TransactionResponse {
 	private Double totalPrice;
 	private String noted;
 	private TransactionState state;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSSZ")
+	private Date inventoryReservedDate;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSSZ")
+	private Date paymentResultDate;
+	private TransactionState preState;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSSZ")
+	private Date createdDate;
 
 }

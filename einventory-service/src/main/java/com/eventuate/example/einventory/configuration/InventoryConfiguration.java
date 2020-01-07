@@ -34,7 +34,7 @@ public class InventoryConfiguration {
 	}
 
 	@Bean
-	public IInventoryService orderService(AggregateRepository<Transaction, TransactionCommand> transactionRepository) {
+	public IInventoryService inventoryService(AggregateRepository<Transaction, TransactionCommand> transactionRepository) {
 		return new IInventoryServiceImpl(transactionRepository);
 	}
 

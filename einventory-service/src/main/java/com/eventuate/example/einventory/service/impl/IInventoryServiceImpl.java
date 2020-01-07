@@ -3,6 +3,7 @@ package com.eventuate.example.einventory.service.impl;
 import java.util.Random;
 
 import com.eventuate.example.constant.MessageConstant;
+import com.eventuate.example.constant.TransactionState;
 import com.eventuate.example.einventory.service.IInventoryService;
 import com.eventuate.example.entity.Transaction;
 import com.eventuate.example.exception.BusinessLogicException;
@@ -30,9 +31,14 @@ public class IInventoryServiceImpl implements IInventoryService {
 		Transaction trans = transactionRepository.find(event.getId()).getEntity();
 		if (trans == null) 
 			throw new BusinessLogicException(MessageConstant.NOT_FOUND, MessageConstant.NOT_FOUND);
-		Random random = new Random();
-	    int val = random.nextInt(10);
-	    if (val % 2 == 0) return true;
+		if (trans.getState().equals(TransactionState.CONFIRMED) || trans.getState().equals(TransactionState.PAID)) {
+//			Random random = new Random();
+//		    int val = random.nextInt(10);
+//		    if (val % 2 == 0) return true;
+			return true;
+		}
+		log.info("PaymentService not allow change or update new state!");
+
 		return false;
 	}
 

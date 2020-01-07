@@ -3,10 +3,10 @@ package com.eventuate.example.etransaction.event;
 import java.util.concurrent.CompletableFuture;
 
 import com.eventuate.example.entity.Transaction;
-import com.eventuate.example.info.command.ConfirmTransactionCommand;
+import com.eventuate.example.info.command.RollbackInventoryCommand;
 import com.eventuate.example.info.command.SuccessTransactionCommand;
-import com.eventuate.example.info.event.ConfirmTransactionEvent;
-import com.eventuate.example.info.event.TransactionSuccessEvent;
+import com.eventuate.example.info.event.TransactionPaidEvent;
+import com.eventuate.example.info.event.TransactionUnPaidEvent;
 import com.eventuate.example.utils.JsonUtils;
 
 import io.eventuate.EntityWithIdAndVersion;
@@ -42,10 +42,44 @@ public class TransactionWorkflow {
 	
 	@EventHandlerMethod
 	public CompletableFuture<EntityWithIdAndVersion<Transaction>> onPaymentSuccess(
-			EventHandlerContext<TransactionSuccessEvent> ctx) {
+			EventHandlerContext<TransactionPaidEvent> ctx) {
 
-		TransactionSuccessEvent event = ctx.getEvent();
-		log.info("Received success transaciton event", JsonUtils.objectToString(event));
+		TransactionPaidEvent event = ctx.getEvent();
+		log.info("Received success payment transaciton event", JsonUtils.objectToString(event));
 		return ctx.update(Transaction.class, event.getId(), new SuccessTransactionCommand(event.getId()));
 	}
+	
+	
+	@EventHandlerMethod
+	public CompletableFuture<EntityWithIdAndVersion<Transaction>> onPaymentFailure(
+			EventHandlerContext<TransactionUnPaidEvent> ctx) {
+
+		TransactionUnPaidEvent event = ctx.getEvent();
+		log.info("Received failure payment transaciton event", JsonUtils.objectToString(event));
+		return ctx.update(Transaction.class, event.getId(), new RollbackInventoryCommand(event.getId()));
+	}
+	
+	
+	
+	
+	
+//	@EventHandlerMethod
+//	public CompletableFuture<EntityWithIdAndVersion<Transaction>> inventoryInStock(
+//			EventHandlerContext<TransactionInstockEvent> ctx) {
+//
+//		TransactionInstockEvent event = ctx.getEvent();
+//		log.info("Received inventory in stock transaciton event", JsonUtils.objectToString(event));
+//		return ctx.update(Transaction.class, event.getId(), new InStockCommand(event.getId()));
+//	}
+//	
+//	
+//	@EventHandlerMethod
+//	public CompletableFuture<EntityWithIdAndVersion<Transaction>> inventoryOutOfStock(
+//			EventHandlerContext<TransactionOutstockEvent> ctx) {
+//
+//		TransactionOutstockEvent event = ctx.getEvent();
+//		log.info("Received inventory out of stock transaciton event", JsonUtils.objectToString(event));
+//		return ctx.update(Transaction.class, event.getId(), new OutOfStockCommand(event.getId()));
+//	}
+//	
 }
