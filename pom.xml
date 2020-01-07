@@ -19,6 +19,7 @@
 		<module>epayment-service</module>
 		<module>eventuate-common</module>
 		<module>einventory-service</module>
+		<module>transaction-historical</module>
 	</modules>
 
 	<properties>
