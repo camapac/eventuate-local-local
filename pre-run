@@ -1,0 +1,4 @@
+#!/bin/bash
+./einventory-service/Makefile
+./epayment-service/Makefile
+./etransaction-service/Makefile
