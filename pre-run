@@ -1,4 +1,5 @@
 #!/bin/bash
+mvn clean install -DskipTests
 cd einventory-service 
 ./Makefile
 docker build -t einventory .
