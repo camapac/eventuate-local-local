@@ -1,4 +1,10 @@
 #!/bin/bash
-./einventory-service/Makefile
-./epayment-service/Makefile
-./etransaction-service/Makefile
+cd einventory-service 
+./Makefile
+docker build -t einventory .
+cd ../epayment-service
+./Makefile
+docker build -t epayment .
+cd ../etransaction-service
+./Makefile
+docker build -t etransaction .

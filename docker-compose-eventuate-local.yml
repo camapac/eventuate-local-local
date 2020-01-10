@@ -7,7 +7,6 @@ services:
       - 2888:2888
       - 3888:3888
 
-
   kafka:
     image: eventuateio/eventuateio-local-kafka
     ports:
@@ -53,6 +52,8 @@ services:
       EVENTUATELOCAL_CDC_READER_NAME: PostgresPollingReader
       EVENTUATE_CDC_TYPE: "EventuateLocal"
 
+
+
   mongodb:
     image: mongo
     hostname: mongodb
@@ -65,6 +66,40 @@ services:
     image: einventory:latest
     ports:
       - "8081:8080"
+    depends_on:
+      - postgres
+      - kafka
+      - zookeeper
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres/eventuate
+      SPRING_DATASOURCE_USERNAME: eventuate
+      SPRING_DATASOURCE_PASSWORD: eventuate
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+      EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING: zookeeper:2181
+
+
+  etransaction:
+    image: etransaction:latest
+    ports:
+      - "8082:8080"
+    depends_on:
+      - postgres
+      - kafka
+      - zookeeper
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres/eventuate
+      SPRING_DATASOURCE_USERNAME: eventuate
+      SPRING_DATASOURCE_PASSWORD: eventuate
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+      EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING: zookeeper:2181
+
+
+  epayment:
+    image: epayment:latest
+    ports:
+      - "8083:8080"
     depends_on:
       - postgres
       - kafka
