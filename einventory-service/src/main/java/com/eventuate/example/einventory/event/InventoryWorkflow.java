@@ -9,13 +9,13 @@ import com.eventuate.example.entity.Transaction;
 import com.eventuate.example.info.command.InStockCommand;
 import com.eventuate.example.info.command.OutOfStockCommand;
 import com.eventuate.example.info.event.ConfirmTransactionEvent;
+import com.eventuate.example.info.event.TransactionRollbackStockEvent;
 import com.eventuate.example.utils.JsonUtils;
 
 import io.eventuate.EntityWithIdAndVersion;
 import io.eventuate.EventHandlerContext;
 import io.eventuate.EventHandlerMethod;
 import io.eventuate.EventSubscriber;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -39,5 +39,14 @@ public class InventoryWorkflow {
 		log.info("The order outofstock!");
 		return ctx.update(Transaction.class, event.getId(), new OutOfStockCommand(event.getId()));
 
+	}
+	
+	@EventHandlerMethod
+	public void rollbackTheStock(
+			EventHandlerContext<TransactionRollbackStockEvent> ctx) {
+		TransactionRollbackStockEvent event = ctx.getEvent();
+		log.info("Check the stock. rollback the event={}", JsonUtils.objectToString(event));
+		inventoryService.rollbackTheStock(event);
+		
 	}
 }

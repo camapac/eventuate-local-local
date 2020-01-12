@@ -8,10 +8,8 @@ import org.springframework.context.annotation.Import;
 
 import com.eventuate.example.ehistorical.configuration.HistoricalTransactionConfiguration;
 
-import io.eventuate.javaclient.driver.EventuateDriverConfiguration;
-
 @Configuration
-@Import({EventuateDriverConfiguration.class, HistoricalTransactionConfiguration.class})
+@Import({HistoricalTransactionConfiguration.class})
 @EnableAutoConfiguration
 @ComponentScan
 public class HistoricalApplication {

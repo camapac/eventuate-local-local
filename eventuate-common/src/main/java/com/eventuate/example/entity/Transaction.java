@@ -128,6 +128,7 @@ public class Transaction extends ReflectiveMutableCommandProcessingAggregate<Tra
 		// checkAndUpdateSuccess(this, event.getId());
 	}
 
+	@SuppressWarnings("unused")
 	private void checkAndUpdateSuccess(Transaction transaction, String id) {
 		log.info("Check success transaction ={}", JsonUtils.objectToString(transaction));
 		if (transaction.getState().equals(TransactionState.PAID)
@@ -140,6 +141,7 @@ public class Transaction extends ReflectiveMutableCommandProcessingAggregate<Tra
 		}
 	}
 
+	@SuppressWarnings("unused")
 	private void checkAndUpdateFailure(Transaction transaction, String id) {
 		log.info("Check failure transaction ={}", JsonUtils.objectToString(transaction));
 		switch (transaction.getState()) {

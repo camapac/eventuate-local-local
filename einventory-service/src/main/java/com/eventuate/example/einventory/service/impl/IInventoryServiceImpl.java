@@ -9,6 +9,7 @@ import com.eventuate.example.entity.Transaction;
 import com.eventuate.example.exception.BusinessLogicException;
 import com.eventuate.example.info.command.TransactionCommand;
 import com.eventuate.example.info.event.ConfirmTransactionEvent;
+import com.eventuate.example.info.event.TransactionRollbackStockEvent;
 import com.eventuate.example.utils.JsonUtils;
 
 import io.eventuate.sync.AggregateRepository;
@@ -32,14 +33,18 @@ public class IInventoryServiceImpl implements IInventoryService {
 		if (trans == null) 
 			throw new BusinessLogicException(MessageConstant.NOT_FOUND, MessageConstant.NOT_FOUND);
 		if (trans.getState().equals(TransactionState.CONFIRMED) || trans.getState().equals(TransactionState.PAID)) {
-//			Random random = new Random();
-//		    int val = random.nextInt(10);
-//		    if (val % 2 == 0) return true;
-			return true;
+			Random random = new Random();
+		    int val = random.nextInt(10);
+		    if (val % 2 == 0) return true;
 		}
 		log.info("PaymentService not allow change or update new state!");
-
 		return false;
 	}
 
+	@Override
+	public void rollbackTheStock(TransactionRollbackStockEvent event) {
+		log.info("Rollback the stock !!!!!");
+	}
+	
+	
 }
