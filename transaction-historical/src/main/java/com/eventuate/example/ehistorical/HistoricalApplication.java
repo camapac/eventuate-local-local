@@ -1,17 +1,17 @@
 package com.eventuate.example.ehistorical;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
-import com.eventuate.example.ehistorical.configuration.HistoricalTransactionConfiguration;
+import io.eventuate.javaclient.driver.EventuateDriverConfiguration;
+import io.eventuate.javaclient.spring.EnableEventHandlers;
 
-@Configuration
-@Import({HistoricalTransactionConfiguration.class})
-@EnableAutoConfiguration
-@ComponentScan
+@SpringBootApplication
+@EnableMongoRepositories(basePackages = "com.eventuate.example.ehistorical.repository")
+@EnableEventHandlers
+@Import({ EventuateDriverConfiguration.class})
 public class HistoricalApplication {
 
 	public static void main(String[] args) {

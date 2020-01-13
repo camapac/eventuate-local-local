@@ -9,3 +9,6 @@ docker build -t epayment .
 cd ../etransaction-service
 ./Makefile
 docker build -t etransaction .
+cd ../transaction-historical
+./Makefile
+docker build -t transactionview .
