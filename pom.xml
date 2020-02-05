@@ -113,8 +113,8 @@
 
 	<repositories>
 		<repository>
-			<id>jcenter</id>
-			<url>http://jcenter.bintray.com</url>
+			<id>repo-spring</id>
+			<url>https://repo.spring.io/plugins-release/</url>
 		</repository>
 	</repositories>
 
